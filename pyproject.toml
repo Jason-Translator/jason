@@ -1,0 +1,29 @@
+[project]
+name = "jason"
+version = "0.1.0"
+description = "Traduction hors ligne, simple et respectueuse de la vie privée"
+requires-python = ">=3.11"
+dependencies = [
+    "argostranslate>=1.11",
+    "PySide6>=6.9",
+    # Reconnaissance automatique de la langue, hors ligne.
+    "lingua-language-detector>=2.0",
+    # Figé volontairement : les versions plus récentes de stanza exigent des
+    # dépendances supplémentaires (udtools, huggingface-hub) inutiles ici.
+    "stanza==1.10.1",
+    # stanza réclame torch, dont Jason n'utilise que le processeur.
+    # À installer impérativement depuis l'index CPU de PyTorch, sinon pip
+    # télécharge 4,6 Go de bibliothèques CUDA qui ne serviront jamais :
+    #   pip install torch --index-url https://download.pytorch.org/whl/cpu
+    "torch>=2.0",
+]
+
+[project.scripts]
+jason = "jason.app:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["build/sources/jason"]

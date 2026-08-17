@@ -1,0 +1,406 @@
+/* Site de Jason — une seule page, une seule police, deux thèmes.
+   Les couleurs sont celles de l'application (voir jason/ui/theme.py) : le
+   site et le logiciel doivent se ressembler. */
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("polices/ibm-plex-sans.woff2") format("woff2");
+  font-weight: 400 600;   /* fichier variable : une seule requête pour tout */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------------------------------------------------------------- thèmes */
+
+/* Thème clair par défaut. */
+:root {
+  --fond: #f5f6f8;
+  --surface: #ffffff;
+  --texte: #1f2430;
+  --texte-doux: #6b7382;
+  --bordure: #e2e5ea;
+  --accent: #2f6fed;
+  --accent-survol: #245ad4;
+  --ombre: 0 1px 3px rgba(31, 36, 48, .06), 0 8px 24px rgba(31, 36, 48, .06);
+  --voile-mythe: .30;
+}
+
+/* Thème du système, tant que l'utilisateur n'a pas tranché lui-même. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond: #14161b;
+    --surface: #1d2028;
+    --texte: #e7e9ee;
+    --texte-doux: #98a0af;
+    --bordure: #2b2f39;
+    --accent: #4c8dff;
+    --accent-survol: #5f9bff;
+    --ombre: 0 1px 3px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .28);
+    --voile-mythe: .17;
+  }
+}
+
+/* Choix explicite par le bouton : il l'emporte dans les deux sens. */
+:root[data-theme="dark"] {
+  --fond: #14161b;
+  --surface: #1d2028;
+  --texte: #e7e9ee;
+  --texte-doux: #98a0af;
+  --bordure: #2b2f39;
+  --accent: #4c8dff;
+  --accent-survol: #5f9bff;
+  --ombre: 0 1px 3px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .28);
+  --voile-mythe: .17;
+}
+
+/* ---------------------------------------------------------------- base */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  position: relative;   /* repère du tableau posé en fond */
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ----------------------------------------------------------- fond mythique */
+
+/* Le tableau de Natoire derrière le haut de la page. En `absolute` et non en
+   `fixed` : il défile avec la page, et son masque le fait disparaître à
+   mesure qu'on descend. */
+.fond-mythe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: min(1150px, 135vh);
+  pointer-events: none;
+  background: url("images/Jason-taking-the-Golden-Fleece.webp") center 18% / cover no-repeat;
+  opacity: var(--voile-mythe);
+  /* Dégradé : franc en haut, éteint en bas. C'est lui qui garde le texte
+     lisible sans avoir à poser un rectangle opaque par-dessus. */
+  -webkit-mask-image: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, .78) 32%,
+      rgba(0, 0, 0, .32) 64%,
+      rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, .78) 32%,
+      rgba(0, 0, 0, .32) 64%,
+      rgba(0, 0, 0, 0) 100%);
+}
+
+/* Là où le navigateur sait animer au défilement, l'effacement suit vraiment
+   le scroll plutôt que la seule position dans la page. Ailleurs, le masque
+   ci-dessus fait déjà le travail. */
+@supports (animation-timeline: scroll()) {
+  .fond-mythe {
+    animation: estomper-mythe linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 85vh;
+  }
+  @keyframes estomper-mythe { to { opacity: 0; } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fond-mythe { animation: none; }
+}
+
+/* Le contenu passe devant le tableau. */
+main,
+footer { position: relative; z-index: 1; }
+
+main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+p { margin: 0 0 1em; }
+
+a {
+  color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  text-underline-offset: 3px;
+}
+
+a:hover { color: var(--accent-survol); text-decoration-color: currentColor; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.discret { color: var(--texte-doux); }
+.separateur { color: var(--texte-doux); margin: 0 .55em; }
+
+/* ------------------------------------------------------- bouton de thème */
+
+#bascule-theme {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 10;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--bordure);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--texte-doux);
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+
+#bascule-theme:hover { color: var(--texte); border-color: var(--accent); }
+
+#bascule-theme svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* On propose la lune quand la page est claire, et le soleil quand elle est
+   sombre : l'icône annonce ce vers quoi on va, pas l'état courant. */
+.icone-soleil { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .icone-soleil { display: block; }
+  :root:not([data-theme="light"]) .icone-lune { display: none; }
+}
+:root[data-theme="dark"] .icone-soleil { display: block; }
+:root[data-theme="dark"] .icone-lune { display: none; }
+:root[data-theme="light"] .icone-soleil { display: none; }
+:root[data-theme="light"] .icone-lune { display: block; }
+
+/* ---------------------------------------------------------------- hero */
+
+.hero {
+  padding: 88px 0 8px;
+  text-align: center;
+}
+
+.logo { margin-bottom: 20px; }
+
+h1 {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+.accroche {
+  margin: 14px auto 22px;
+  max-width: 20em;
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+}
+
+.intro {
+  max-width: 34em;
+  margin: 0 auto 34px;
+  color: var(--texte-doux);
+}
+
+.telechargements {
+  margin: 0 0 14px;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.precisions {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: var(--texte-doux);
+}
+
+/* ---------------------------------------------------------------- capture */
+
+.capture { margin: 56px 0 72px; }
+
+.ecran {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--bordure);
+  border-radius: 12px;
+  box-shadow: var(--ombre);
+}
+
+/* La capture suit le thème de la page : montrer Jason en clair sur un site
+   sombre (ou l'inverse) donnerait l'impression de deux logiciels différents. */
+.ecran-sombre { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ecran-sombre { display: block; }
+  :root:not([data-theme="light"]) .ecran-clair { display: none; }
+}
+:root[data-theme="dark"] .ecran-sombre { display: block; }
+:root[data-theme="dark"] .ecran-clair { display: none; }
+:root[data-theme="light"] .ecran-sombre { display: none; }
+:root[data-theme="light"] .ecran-clair { display: block; }
+
+figcaption {
+  margin-top: 14px;
+  font-size: 14.5px;
+  text-align: center;
+  color: var(--texte-doux);
+}
+
+/* ---------------------------------------------------------------- sections */
+
+.titre-section {
+  margin: 0 0 18px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+
+.arguments {
+  display: grid;
+  gap: 34px;
+  padding-bottom: 72px;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.arguments h2 {
+  margin: 0 0 .35em;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+.arguments p { margin: 0; color: var(--texte-doux); }
+
+.etapes { padding: 64px 0 0; }
+
+.etapes ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: etape;
+  display: grid;
+  gap: 30px;
+}
+
+.etapes li {
+  counter-increment: etape;
+  padding-left: 52px;
+  position: relative;
+}
+
+.etapes li::before {
+  content: counter(etape);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.etapes h3 {
+  margin: 0 0 .3em;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.etapes p { margin: 0; color: var(--texte-doux); }
+
+/* ---------------------------------------------------------------- limites */
+
+/* Posée sur une surface, contrairement aux autres sections : c'est le
+   passage qu'on aimerait sauter, autant lui donner l'air d'un encadré
+   qu'on lit exprès. */
+.limites {
+  margin: 64px 0;
+  padding: 34px 32px 12px;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: 12px;
+}
+
+.limites p { color: var(--texte-doux); }
+.limites strong { color: var(--texte); font-weight: 600; }
+
+.limites h3 {
+  margin: 28px 0 .45em;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--texte);
+}
+
+/* ------------------------------------------------------- origine du nom */
+
+.origine { padding: 64px 0; border-bottom: 1px solid var(--bordure); }
+.origine p { color: var(--texte-doux); max-width: 46em; }
+.origine strong { color: var(--texte); font-weight: 600; }
+
+.origine h3 {
+  margin: 34px 0 .5em;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.lien-savoir-plus { margin-top: 22px; font-weight: 500; }
+
+/* ---------------------------------------------------------------- crédits */
+
+.credits { padding: 64px 0 0; }
+.credits p { color: var(--texte-doux); max-width: 46em; }
+.credits strong { color: var(--texte); font-weight: 600; }
+.credits .titre-section:not(:first-child) { margin-top: 42px; }
+
+/* ---------------------------------------------------------------- pied */
+
+footer {
+  max-width: 780px;
+  margin: 72px auto 0;
+  padding: 28px 24px 56px;
+  border-top: 1px solid var(--bordure);
+  font-size: 14.5px;
+  color: var(--texte-doux);
+}
+
+footer p { margin: 0 0 .4em; }
+
+/* ---------------------------------------------------------------- mobile */
+
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .hero { padding-top: 68px; }
+  h1 { font-size: 36px; }
+  .accroche { font-size: 21px; }
+  .capture { margin: 44px 0 56px; }
+
+  /* Les deux liens passent l'un sous l'autre : côte à côte, ils se
+     couperaient au milieu d'un mot. */
+  .telechargements { display: grid; gap: 10px; }
+  .telechargements .separateur { display: none; }
+
+  .etapes li { padding-left: 44px; }
+}

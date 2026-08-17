@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=Jason
+GenericName=Traducteur hors ligne
+Comment=Traduisez vos textes sans connexion Internet et sans envoyer vos données
+Exec=jason
+Icon=jason
+Terminal=false
+# Une seule catégorie principale (Office) : avec plusieurs, certains menus
+# affichent l'application en double.
+Categories=Office;Dictionary;Translation;
+Keywords=traduction;traduire;langue;dictionnaire;hors ligne;translate;
+StartupWMClass=jason

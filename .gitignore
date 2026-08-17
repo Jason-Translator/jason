@@ -1,0 +1,10 @@
+.venv/
+apps/
+build/cache_pyinstaller/
+build/dist/
+build/tmp/
+__pycache__/
+*.pyc
+*.spec.bak
+autotest.log
+*.webm

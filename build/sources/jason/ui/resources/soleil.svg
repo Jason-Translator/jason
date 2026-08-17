@@ -1,0 +1,9 @@
+<!-- Affiché en thème sombre : cliquer revient au thème clair. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <g fill="none" stroke="#c8cdd8" stroke-width="1.5" stroke-linecap="round">
+    <circle cx="9" cy="9" r="3.4"/>
+    <path d="M9 1.6v1.8M9 14.6v1.8M1.6 9h1.8M14.6 9h1.8
+             M3.8 3.8l1.3 1.3M12.9 12.9l1.3 1.3
+             M14.2 3.8l-1.3 1.3M5.1 12.9l-1.3 1.3"/>
+  </g>
+</svg>

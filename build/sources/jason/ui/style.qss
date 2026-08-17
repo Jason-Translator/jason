@@ -1,0 +1,354 @@
+/* Apparence de Jason.
+
+   Une seule feuille de style pour les deux thèmes : aucune couleur n'est
+   écrite ici. Les noms entre accolades — {FOND}, {ACCENT}, {TEXTE}… — sont
+   remplacés au démarrage par les valeurs du thème choisi (voir theme.py).
+
+   Conséquence pratique : pour changer une couleur, ne touchez pas à ce
+   fichier, modifiez la palette dans theme.py — sinon le thème sombre et le
+   thème clair se mettent à diverger.
+
+   L'aspect est volontairement identique sur les trois systèmes : ainsi les
+   captures d'écran restent valables sous Windows, Linux et macOS. */
+
+QWidget {
+    background: {FOND};
+    color: {TEXTE};
+    font-size: 14px;
+}
+
+/* --- menus de langues --- */
+
+QComboBox#choixLangue {
+    background: {SURFACE};
+    border: 1px solid {BORDURE_NETTE};
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+QComboBox#choixLangue:hover {
+    border-color: {BORDURE_SURVOL};
+}
+
+QComboBox#choixLangue:focus {
+    border-color: {ACCENT};
+}
+
+QComboBox#choixLangue::drop-down {
+    border: none;
+    width: 26px;
+}
+
+QComboBox#choixLangue::down-arrow {
+    /* Le chevron indique que le menu s'ouvre : sans lui, rien ne signale
+       à l'utilisateur qu'il peut cliquer. Le dessin porte sa couleur, on
+       change donc de fichier selon le thème. */
+    image: url("{RESSOURCES}/{CHEVRON}");
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+}
+
+QComboBox#choixLangue QAbstractItemView {
+    background: {SURFACE};
+    border: 1px solid {BORDURE_NETTE};
+    border-radius: 8px;
+    padding: 4px;
+    outline: none;
+    selection-background-color: {ACCENT};
+    selection-color: #ffffff;
+}
+
+QComboBox#choixLangue:disabled {
+    background: {SURFACE_INACTIVE};
+    color: {TEXTE_INACTIF};
+}
+
+/* --- zones de texte --- */
+
+QTextEdit {
+    background: {SURFACE};
+    border: 1px solid {BORDURE};
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 16px;
+    line-height: 150%;
+    selection-background-color: {SELECTION};
+    selection-color: {TEXTE};
+}
+
+QTextEdit#saisie:focus {
+    border-color: {ACCENT};
+}
+
+QTextEdit#resultat {
+    background: {SURFACE_DOUCE};
+}
+
+QTextEdit:disabled {
+    background: {SURFACE_INACTIVE};
+    color: {TEXTE_INACTIF};
+}
+
+/* --- boutons --- */
+
+QPushButton#boutonEchange,
+QPushButton#boutonIcone {
+    background: {SURFACE};
+    border: 1px solid {BORDURE_NETTE};
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-size: 17px;
+}
+
+QPushButton#boutonEchange:hover,
+QPushButton#boutonIcone:hover {
+    background: {ACCENT_VOILE};
+    border-color: {ACCENT};
+    color: {ACCENT};
+}
+
+QPushButton#boutonEchange:disabled {
+    background: {SURFACE_INACTIVE};
+    color: {TEXTE_INACTIF};
+    border-color: {BORDURE};
+}
+
+QPushButton#boutonIcone {
+    /* Bouton carré : seule l'icône compte, aucun texte à loger. */
+    padding: 8px;
+    min-width: 20px;
+}
+
+QPushButton#boutonCopier {
+    background: {ACCENT};
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Dans la fenêtre principale, le bouton copier ne porte qu'une icône :
+   même gabarit carré que le bouton rouage voisin. */
+QMainWindow QPushButton#boutonCopier {
+    padding: 9px;
+    min-width: 20px;
+}
+
+QPushButton#boutonCopier:hover {
+    background: {ACCENT_SURVOL};
+}
+
+QPushButton#boutonCopier:pressed {
+    background: {ACCENT_APPUI};
+}
+
+QPushButton#boutonCopier:disabled {
+    background: {ACCENT_INACTIF};
+    color: {TEXTE_INACTIF};
+}
+
+/* --- ligne d'état --- */
+
+QLabel#etat {
+    color: {TEXTE_DOUX};
+    font-size: 13px;
+}
+
+/* --- écran des langues --- */
+
+QLabel#titre {
+    font-size: 21px;
+    font-weight: 600;
+    color: {TEXTE};
+}
+
+QLabel#sousTitre {
+    font-size: 14px;
+    color: {TEXTE_MOYEN};
+    line-height: 145%;
+}
+
+QLabel#note,
+QLabel#message {
+    color: {TEXTE_DOUX};
+    font-size: 13px;
+}
+
+QLabel#message {
+    font-size: 14px;
+    line-height: 150%;
+    padding: 30px;
+}
+
+QListWidget#listeLangues {
+    background: {SURFACE};
+    border: 1px solid {BORDURE};
+    border-radius: 12px;
+    padding: 6px;
+    outline: none;
+    font-size: 15px;
+}
+
+QListWidget#listeLangues::item {
+    padding: 9px 8px;
+    border-radius: 6px;
+}
+
+QListWidget#listeLangues::item:hover {
+    background: {SURVOL_DOUX};
+}
+
+QListWidget#listeLangues::item:disabled {
+    color: {TEXTE_INACTIF};
+}
+
+QListWidget#listeLangues::indicator {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+    border: 1px solid {BORDURE_SURVOL};
+    border-radius: 5px;
+    background: {SURFACE};
+}
+
+QListWidget#listeLangues::indicator:checked {
+    background: {ACCENT};
+    border-color: {ACCENT};
+    image: url("{RESSOURCES}/coche.svg");
+}
+
+QListWidget#listeLangues::indicator:disabled:checked {
+    background: {ACCENT_PALE};
+    border-color: {ACCENT_PALE};
+}
+
+QProgressBar#barre {
+    background: {SURFACE_INACTIVE};
+    border: none;
+    border-radius: 5px;
+    height: 8px;
+}
+
+QProgressBar#barre::chunk {
+    background: {ACCENT};
+    border-radius: 5px;
+}
+
+QPushButton#boutonSecondaire {
+    background: transparent;
+    color: {TEXTE_MOYEN};
+    border: 1px solid {BORDURE_NETTE};
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 14px;
+}
+
+QPushButton#boutonSecondaire:hover {
+    background: {SURFACE_INACTIVE};
+}
+
+QPushButton#boutonSecondaire:disabled {
+    color: {TEXTE_INACTIF};
+    border-color: {BORDURE_INACTIVE};
+}
+
+QWidget#trait {
+    background: {BORDURE};
+}
+
+/* --- fenêtre Paramètres --- */
+
+QTabWidget::pane {
+    border: 1px solid {BORDURE};
+    border-radius: 8px;
+    top: -1px;
+}
+
+QTabBar::tab {
+    background: transparent;
+    color: {TEXTE_MOYEN};
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+QTabBar::tab:selected {
+    color: {ACCENT};
+    border-bottom: 2px solid {ACCENT};
+    font-weight: 600;
+}
+
+QTabBar::tab:hover:!selected {
+    color: {TEXTE};
+}
+
+QRadioButton {
+    font-size: 14px;
+    spacing: 8px;
+}
+
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+    border: 1px solid {BORDURE_SURVOL};
+    border-radius: 9px;
+    background: {SURFACE};
+}
+
+QRadioButton::indicator:checked {
+    /* Bordure épaisse couleur d'accent : le point blanc au centre, c'est
+       simplement le fond qui reste visible. La bordure s'ajoutant autour du
+       contenu, on réduit celui-ci pour garder un cercle de 18 px en tout. */
+    width: 8px;
+    height: 8px;
+    border: 5px solid {ACCENT};
+    background: #ffffff;
+}
+
+QLabel#aPropos {
+    font-size: 14px;
+    line-height: 150%;
+    padding: 8px;
+}
+
+/* Les lignes de la liste des langues sont de vrais widgets posés sur les
+   éléments : sans fond transparent, ils peindraient la couleur de la fenêtre
+   par-dessus celle de la liste. */
+QListWidget#listeLangues QWidget {
+    background: transparent;
+}
+
+QPushButton#boutonLigne {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 6px;
+}
+
+QPushButton#boutonLigne:hover {
+    background: {SURFACE_INACTIVE};
+}
+
+QLabel#enteteListe {
+    color: {TEXTE_DOUX};
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 8px 6px 3px 6px;
+}
+
+QLabel#langueDisponible {
+    color: {TEXTE_MOYEN};
+}
+
+/* --- poignée entre les deux zones --- */
+
+QSplitter::handle {
+    background: transparent;
+}

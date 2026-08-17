@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Jason — traducteur hors ligne</title>
+<meta name="description" content="Jason est un traducteur qui fonctionne entièrement sur votre ordinateur. Hors ligne, sans compte, sans publicité : vos textes ne sont envoyés nulle part.">
+
+<meta property="og:title" content="Jason — traducteur hors ligne">
+<meta property="og:description" content="Traduisez sans connexion, et sans que rien ne quitte votre ordinateur.">
+<meta property="og:image" content="images/jason-sombre.png">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="images/jason.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+
+<!-- Applique le thème enregistré avant le premier rendu : sans ça, la page
+     s'afficherait une fraction de seconde dans le mauvais thème. -->
+<script>
+  try {
+    var choix = localStorage.getItem("theme");
+    if (choix) document.documentElement.dataset.theme = choix;
+  } catch (e) {}
+</script>
+</head>
+
+<body>
+
+<!-- Le tableau de Natoire, posé derrière le haut de la page. Purement
+     décoratif : il s'efface à mesure qu'on descend. -->
+<div class="fond-mythe" aria-hidden="true"></div>
+
+<button id="bascule-theme" type="button" aria-label="Changer de thème" title="Changer de thème">
+  <svg class="icone-soleil" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2"/>
+    <path d="M12 2.5v2.6M12 18.9v2.6M4.2 4.2l1.9 1.9M17.9 17.9l1.9 1.9M2.5 12h2.6M18.9 12h2.6M4.2 19.8l1.9-1.9M17.9 6.1l1.9-1.9"/>
+  </svg>
+  <svg class="icone-lune" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2z"/>
+  </svg>
+</button>
+
+<main>
+
+  <!-- ================= En-tête ================= -->
+  <header class="hero">
+    <img class="logo" src="images/jason.svg" alt="" width="64" height="64">
+    <h1>Jason</h1>
+    <p class="accroche">Traduisez sans connexion, et sans que rien ne quitte
+      votre ordinateur.</p>
+    <p class="intro">Jason est un traducteur qui fonctionne entièrement sur
+      votre machine. Aucun compte, aucune publicité, aucun serveur : le texte
+      que vous écrivez n'est envoyé nulle part.</p>
+
+    <!--
+      ============================================================
+      LIENS DE TÉLÉCHARGEMENT — le seul endroit à modifier.
+
+      Remplacez UTILISATEUR et DEPOT par les vôtres. Ces adresses
+      redirigent toujours vers la DERNIÈRE version publiée : une fois
+      renseignées, ce fichier n'a plus jamais besoin d'être touché,
+      même après une nouvelle release.
+
+      Condition : le nom des fichiers publiés ne doit jamais changer
+      d'une version à l'autre (aucun numéro de version dedans).
+      ============================================================
+    -->
+    <p class="telechargements">
+      <a href="https://github.com/UTILISATEUR/DEPOT/releases/latest/download/JasonInstallateur.exe">
+        Télécharger pour Windows</a>
+      <span class="separateur" aria-hidden="true">·</span>
+      <a href="https://github.com/UTILISATEUR/DEPOT/releases/latest/download/Jason-x86_64.AppImage">
+        Télécharger pour Linux</a>
+    </p>
+    <p class="precisions">
+      Windows : installateur d'environ 300 Mo, aucun droit administrateur
+      nécessaire.<br>
+      Linux : AppImage d'environ 520 Mo, à rendre exécutable avant le premier
+      lancement.<br>
+      <a class="discret" href="https://github.com/UTILISATEUR/DEPOT/releases">toutes
+        les versions</a>
+    </p>
+  </header>
+
+  <!-- ================= Capture ================= -->
+  <figure class="capture">
+    <img class="ecran ecran-clair" src="images/jason-clair.png"
+         alt="La fenêtre de Jason : à gauche un texte en anglais, à droite sa traduction en français."
+         width="940" height="580">
+    <img class="ecran ecran-sombre" src="images/jason-sombre.png"
+         alt="La fenêtre de Jason : à gauche un texte en anglais, à droite sa traduction en français."
+         width="940" height="580">
+    <figcaption>Une traduction réelle de l'anglais vers le français. La langue
+      du texte saisi a été reconnue automatiquement.</figcaption>
+  </figure>
+
+  <!-- ================= Arguments ================= -->
+  <section class="arguments">
+    <div>
+      <h2>Il fonctionne hors ligne</h2>
+      <p>Dans un train, un avion, une zone sans réseau, ou un pays sans
+        forfait de données. Une fois vos langues installées, Internet n'est
+        plus nécessaire.</p>
+    </div>
+    <div>
+      <h2>Vos textes restent chez vous</h2>
+      <p>Les traducteurs en ligne envoient chaque phrase saisie à un serveur
+        distant. Un texte personnel, médical ou professionnel y passe comme le
+        reste. Avec Jason, la traduction est calculée sur votre ordinateur.</p>
+    </div>
+    <div>
+      <h2>Rien à créer, rien à accepter</h2>
+      <p>Pas de compte, pas d'abonnement, pas de publicité, pas de bandeau de
+        consentement.</p>
+    </div>
+  </section>
+
+  <!-- ================= Prise en main ================= -->
+  <section class="etapes">
+    <h2 class="titre-section">Comment ça marche</h2>
+    <ol>
+      <li>
+        <h3>Installez Jason</h3>
+        <p>Un installateur sous Windows, un fichier unique à double-cliquer
+          sous Linux. Rien d'autre à installer.</p>
+      </li>
+      <li>
+        <h3>Choisissez vos langues</h3>
+        <p>Au premier lancement, Jason ouvre la liste des langues :
+          téléchargez celles dont vous avez besoin, parmi cinquante. C'est le
+          seul moment où une connexion est nécessaire.</p>
+      </li>
+      <li>
+        <h3>Écrivez à gauche, lisez à droite</h3>
+        <p>La langue de votre texte est reconnue toute seule. Vous pouvez
+          ajouter ou supprimer des langues à tout moment depuis les
+          Paramètres.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ================= Limites ================= -->
+  <section class="limites">
+    <h2 class="titre-section">Ce que Jason traduit mal</h2>
+
+    <p>Autant le dire tout de suite : <strong>Jason traduit moins bien que
+      Google Traduction ou DeepL</strong>. Ce n'est pas un défaut de jeunesse,
+      c'est le prix de ce qu'il promet. Pour tenir sur un ordinateur ordinaire
+      et fonctionner sans connexion, chaque langue pèse environ 170 Mo. Les
+      services en ligne, eux, font tourner des modèles bien plus gros dans des
+      centres de données. À cette taille-là, il n'y a pas de miracle.</p>
+
+    <h3>Tout passe par l'anglais</h3>
+    <p>Pour traduire du français vers le japonais, Jason traduit d'abord vers
+      l'anglais, puis de l'anglais vers le japonais. C'est ce qui lui évite
+      d'embarquer un modèle par paire de langues — il en faudrait près de deux
+      mille cinq cents — mais chaque étape ajoute ses propres erreurs, et
+      elles s'additionnent.</p>
+
+    <h3>Certaines langues souffrent bien plus que d'autres</h3>
+    <p>L'espagnol, l'italien ou le portugais partagent avec le français
+      l'essentiel de leur vocabulaire et de leur grammaire : même un petit
+      modèle s'en sort honorablement.</p>
+    <p>L'arabe, le japonais, le russe ou le chinois fonctionnent tout
+      autrement — ordre des mots différent, déclinaisons, sujets sous-entendus,
+      écriture sans espaces ou de droite à gauche. Il y a beaucoup plus à
+      apprendre, et beaucoup moins de textes déjà traduits pour l'apprendre.
+      Sur ces langues, attendez-vous à saisir le sens général, pas à obtenir
+      une phrase correcte.</p>
+
+    <h3>La démonstration est plus haut sur cette page</h3>
+    <p>Dans la capture d'écran, Jason écrit « Je traduit du texte » au lieu de
+      « Je traduis ». Et c'est de l'anglais vers le français, la paire la plus
+      facile qui soit. Cette capture n'a pas été retouchée : elle montre ce
+      que le logiciel produit réellement.</p>
+
+    <h3>À quoi ça sert, alors ?</h3>
+    <p>À <strong>comprendre</strong>. Un mode d'emploi, un message, un article,
+      un panneau : Jason vous en donne le sens, sans connexion et sans que le
+      texte parte ailleurs. Pour un contrat, un document médical, une lettre
+      officielle, ou tout texte que quelqu'un d'autre va lire, prenez un
+      traducteur en ligne — ou un traducteur humain.</p>
+  </section>
+
+  <!-- ================= Origine du nom ================= -->
+  <section class="origine">
+    <h2 class="titre-section">Pourquoi « Jason » ?</h2>
+
+    <p>Jason ne traduit pas tout seul : sous le capot, le travail est fait par
+      un moteur libre appelé <strong>Argos Translate</strong>. Ses auteurs
+      n'expliquent nulle part d'où vient ce nom — ni leur dépôt, ni leur site
+      n'en disent un mot. Mais dans la mythologie grecque,
+      <strong>Argos est le charpentier qui construisit l'<i>Argo</i></strong>,
+      le navire de Jason, et à qui le navire doit son nom.</p>
+
+    <p>Le clin d'œil était trop beau pour être ignoré : Argos bâtit le navire,
+      Jason le mène à bon port. Le moteur fait la traduction ; ce logiciel en
+      fait quelque chose d'utilisable par n'importe qui. Le nom est donc un
+      hommage assumé — pas une filiation revendiquée par les auteurs
+      d'Argos Translate.</p>
+
+    <p>Car un navire seul ne va nulle part. Il lui faut quelqu'un pour tenir la
+      barre : rendre abordable une mécanique qui existait déjà, mais que
+      personne n'avait envie d'affronter.</p>
+
+    <h3>L'histoire, en quelques lignes</h3>
+
+    <p>Jason est un héros grec, fils d'Éson, roi d'Iolcos. Son oncle Pélias
+      s'empare du trône qui lui revient, et promet de le lui rendre à une
+      condition : rapporter la <strong>Toison d'or</strong>, la fourrure d'un
+      bélier ailé, suspendue à un arbre au bout du monde connu et gardée par
+      un dragon qui ne dort jamais.</p>
+
+    <p>Jason fait construire un navire, l'<i>Argo</i>, et réunit un équipage
+      de héros — les <strong>Argonautes</strong>, parmi lesquels Orphée et
+      Héraclès. Après une longue traversée semée d'épreuves, il obtient la
+      Toison avec l'aide de Médée, magicienne et fille du roi qui la gardait,
+      et rentre chez lui avec.</p>
+
+    <p class="lien-savoir-plus">
+      <a href="https://fr.wikipedia.org/wiki/Jason" rel="noopener">Lire
+        l'histoire complète sur Wikipédia</a>
+    </p>
+  </section>
+
+  <!-- ================= Crédits ================= -->
+  <section class="credits">
+    <h2 class="titre-section">Qui a construit Jason</h2>
+    <p><strong>François Guerin</strong> — l'architecte : l'idée, les choix
+      techniques, le dessin de l'interface, et les essais jusqu'à ce que tout
+      tienne debout.</p>
+    <p><strong>Claude</strong> (Anthropic) — le maçon : l'écriture du code,
+      d'après les plans de l'architecte.</p>
+
+    <h2 class="titre-section">Remerciements</h2>
+    <p>Jason ne réinvente rien. Il repose sur des projets libres et sur leurs
+      contributeurs, souvent anonymes, sans qui rien de tout cela ne serait
+      possible.</p>
+    <p>Il traduit grâce à <strong>Argos Translate</strong> et
+      <strong>CTranslate2</strong>, reconnaît les langues avec
+      <strong>Lingua</strong>, découpe les phrases avec <strong>Stanza</strong>,
+      et affiche tout cela avec <strong>Qt</strong> et <strong>PySide6</strong>,
+      en <strong>Python</strong>.</p>
+    <p>Pour arriver jusqu'à vous, il est empaqueté avec
+      <strong>PyInstaller</strong>, puis distribué en <strong>AppImage</strong>
+      sous Linux et avec <strong>Inno Setup</strong> sous Windows.</p>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    <a href="https://github.com/UTILISATEUR/DEPOT">Code source</a>
+    <span class="separateur" aria-hidden="true">·</span>
+    Windows et Linux
+  </p>
+  <p class="discret">Projet présenté au concours Innovez de
+    <i>Science &amp; Vie Junior</i>.</p>
+  <p class="discret">Illustration de fond : <i>Jason se saisissant de la
+    Toison d'or</i>, Charles-Joseph Natoire (1700-1777), musée Saint-Loup,
+    Troyes — domaine public.</p>
+</footer>
+
+<script>
+  (function () {
+    var bouton = document.getElementById("bascule-theme");
+    var racine = document.documentElement;
+
+    bouton.addEventListener("click", function () {
+      // Sans choix enregistré, on part du thème que le système impose.
+      var actuel = racine.dataset.theme ||
+        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      var nouveau = actuel === "dark" ? "light" : "dark";
+      racine.dataset.theme = nouveau;
+      try { localStorage.setItem("theme", nouveau); } catch (e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>
