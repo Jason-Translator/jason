@@ -233,6 +233,15 @@ h1 {
 
 .capture { margin: 56px 0 72px; }
 
+/* Deuxième capture, plus discrète : elle appuie la première, elle ne
+   rivalise pas avec elle. */
+.capture-secondaire {
+  margin: -40px auto 72px;
+  max-width: 480px;
+}
+.capture-secondaire .ecran { box-shadow: none; }
+.capture-secondaire figcaption { font-style: italic; }
+
 .ecran {
   display: block;
   width: 100%;
