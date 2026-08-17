@@ -1,5 +1,7 @@
 # Jason
 
+[Téléchargement](https://github.com/Jason-Translator/jason/releases)
+
 **Traduisez vos textes sans connexion Internet, et sans que rien ne quitte votre ordinateur.**
 
 Jason est un traducteur qui fonctionne entièrement sur votre machine. Aucun
