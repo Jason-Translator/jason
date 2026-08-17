@@ -1,6 +1,6 @@
 # Jason
 
-[Téléchargement](https://github.com/Jason-Translator/jason/releases)
+[Téléchargements](https://github.com/Jason-Translator/jason/releases)
 
 **Traduisez vos textes sans connexion Internet, et sans que rien ne quitte votre ordinateur.**
 
