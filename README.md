@@ -41,14 +41,13 @@ Rien d'autre à installer, aucun droit administrateur nécessaire.
 
 ### Construire depuis les sources
 
-Deux prérequis à installer une seule fois, à la main :
+#### Linux
 
-- **Python 3.11 ou plus récent** (construit et testé avec Python 3.14), en
-  cochant *« Add python.exe to PATH »* à l'installation sous Windows.
-- **Sous Windows uniquement**, en plus : [Inno Setup 6](https://jrsoftware.org/isdl.php)
-  (installation par défaut), pour fabriquer l'installateur.
+Prérequis à installer une seule fois, à la main :
 
-**Sous Linux**, pour lancer Jason directement depuis les sources :
+- **Python 3.11 ou plus récent** (construit et testé avec Python 3.14).
+
+Pour lancer Jason directement depuis les sources :
 
 ```bash
 python3 -m venv .venv
@@ -59,12 +58,25 @@ python3 -m venv .venv
 .venv/bin/python -m jason
 ```
 
-Fabriquer l'AppImage ou l'installateur (les deux commandes qui font tout, y
-compris l'installation des dépendances) : voir `build/GUIDE.md`.
+Fabriquer l'AppImage (la commande qui fait tout, y compris l'installation
+des dépendances) : voir `build/GUIDE.md`.
 
-**Sous Windows**, double-cliquez `build\sources\windows\construire_installateur.ps1`
-— ou, plus simple, le fichier `.bat` juste à côté, qui l'appelle pour vous
-sans passer par la ligne de commande. Il installe les dépendances, empaquette,
+#### Windows
+
+Prérequis à installer une seule fois, à la main :
+
+- **Python 3.11 ou plus récent** (construit et testé avec Python 3.14), en
+  cochant *« Add python.exe to PATH »* à l'installation. Si vous ne voyez
+  pas cette case à cocher, par exemple si vous avez utilisé
+  [Python Install Manager](https://apps.microsoft.com/detail/9nq7512cxl7t),
+  lancez python une fois dans la console, puis approuvez `y` l'ajout de
+  python dans le PATH.
+- [Inno Setup 6](https://jrsoftware.org/isdl.php) (installation par défaut),
+  pour fabriquer l'installateur.
+
+Double-cliquez `build\sources\windows\construire_installateur.ps1` — ou,
+plus simple, le fichier `.bat` juste à côté, qui l'appelle pour vous sans
+passer par la ligne de commande. Il installe les dépendances, empaquette,
 vérifie que l'application traduit vraiment, puis produit
 `apps\windows\JasonInstallateur.exe`.
 
