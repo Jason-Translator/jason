@@ -1,0 +1,97 @@
+# Construit JasonInstallateur.exe sur une machine Windows de GitHub,
+# sans avoir besoin d'un PC Windows à soi.
+#
+# Reproduit les étapes de build/sources/windows/construire_installateur.ps1
+# (la référence pour un build à la main) : venv → dépendances → PyInstaller
+# → autotest → Inno Setup. Seule différence : Inno Setup n'est pas
+# préinstallé sur les machines GitHub, on l'installe via Chocolatey.
+#
+# Deux déclencheurs :
+#   - à la main, depuis l'onglet Actions (workflow_dispatch) ;
+#   - à chaque tag de version (v1.0.0, v1.1.0…) — l'exe est alors attaché
+#     à la release du même tag, ce qui alimente le lien permanent
+#     /releases/latest/download/JasonInstallateur.exe du site.
+
+name: Installateur Windows
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+jobs:
+  construire:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    # Nécessaire pour attacher l'exe à la release du tag.
+    permissions:
+      contents: write
+
+    steps:
+      - name: Récupérer les sources
+        uses: actions/checkout@v4
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Dépendances
+        shell: pwsh
+        run: |
+          python -m venv .venv
+          & .venv\Scripts\pip.exe install --upgrade pip
+          & .venv\Scripts\pip.exe install -e .
+          # torch depuis l'index processeur : sinon pip télécharge des
+          # gigaoctets de bibliothèques CUDA inutiles (Jason n'utilise
+          # que le processeur).
+          & .venv\Scripts\pip.exe install torch --index-url https://download.pytorch.org/whl/cpu
+          & .venv\Scripts\pip.exe install pyinstaller
+
+      - name: Empaquetage PyInstaller
+        shell: pwsh
+        run: |
+          & .venv\Scripts\pyinstaller.exe --noconfirm `
+              --distpath build\dist --workpath build\cache_pyinstaller `
+              jason.spec
+
+      - name: Autotest de l'exécutable
+        shell: pwsh
+        run: |
+          $LogPath = "build\dist\jason\autotest.log"
+          Remove-Item $LogPath -ErrorAction SilentlyContinue
+          # Application fenêtrée : sans -Wait, PowerShell n'attendrait pas.
+          Start-Process -FilePath "build\dist\jason\jason.exe" -ArgumentList "--autotest" -Wait
+          $Log = if (Test-Path $LogPath) { Get-Content $LogPath -Raw -Encoding UTF8 } else { "" }
+          Write-Host $Log
+          if ($Log -match "AUTOTEST INCOMPLET") {
+            # Machine vierge, aucune langue Argos : la traduction ne peut pas
+            # être testée, mais l'exécutable démarre et son moteur se charge.
+            Write-Warning "Aucune langue installée : traduction non testée, on continue."
+          } elseif ($Log -notmatch "AUTOTEST RÉUSSI") {
+            Write-Error "L'application ne fonctionne pas - installateur non construit."
+            exit 1
+          }
+
+      - name: Installateur Inno Setup
+        shell: pwsh
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" build\sources\windows\installateur.iss
+
+      - name: Conserver l'exe (artefact du run)
+        uses: actions/upload-artifact@v4
+        with:
+          name: JasonInstallateur
+          path: apps/windows/JasonInstallateur.exe
+          if-no-files-found: error
+
+      - name: Attacher l'exe à la release du tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "${{ github.ref_name }}" apps/windows/JasonInstallateur.exe --clobber
