@@ -31,6 +31,22 @@ de deviner au hasard.
 Téléchargez le fichier `Jason.AppImage`, rendez-le exécutable, double-cliquez.
 Rien d'autre à installer.
 
+#### Comment rendre Jason exécutable sur Linux
+
+Sous Linux, un fichier téléchargé n'est jamais exécutable par défaut : c'est
+une mesure de sécurité du système, pas un problème propre à Jason. Deux
+façons de lever cette limitation, au choix :
+
+- **En ligne de commande**, avec `chmod +x` (voir ci-dessous) : la commande
+  ne s'exécute qu'une seule fois, après quoi le fichier reste exécutable.
+- **Depuis votre gestionnaire de fichiers**, sans terminal : clic droit sur
+  `Jason.AppImage` → *Propriétés* → onglet *Permissions* → cochez
+  *« Autoriser l'exécution du fichier comme un programme »* (le libellé
+  exact varie selon votre environnement de bureau : GNOME, KDE, Xfce...).
+
+Une fois cette étape faite, double-cliquer sur `Jason.AppImage` suffit à
+lancer Jason.
+
 ```bash
 chmod +x Jason.AppImage
 ./Jason.AppImage
@@ -40,6 +56,20 @@ chmod +x Jason.AppImage
 
 Téléchargez `JasonInstallateur.exe`, double-cliquez, suivez les trois écrans.
 Rien d'autre à installer, aucun droit administrateur nécessaire.
+
+Attention, certains antivirus tels qu'Avast, Bitdefender ou AVG sont
+susceptibles d'interférer avec l'installation et d'empêcher Jason de
+s'installer correctement. Désactivez-les **avant** d'installer Jason : une
+fois l'installation perturbée, cliquer sur tous les écrans de confirmation
+ne suffit plus à la rattraper.
+
+Quant à Microsoft Defender SmartScreen, il peut afficher un écran
+anxiogène : ne vous en préoccupez pas, cliquez sur *« Informations
+complémentaires »*, puis *« Exécuter quand même »*.
+
+Cet avertissement s'affiche parce que je n'ai pas les moyens de payer la
+vérification de Jason par Microsoft — j'espère pouvoir changer cela à
+l'avenir.
 
 ### Construire depuis les sources
 
