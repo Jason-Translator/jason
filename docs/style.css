@@ -240,7 +240,11 @@ h1 {
   max-width: 480px;
 }
 .capture-secondaire .ecran { box-shadow: none; }
-.capture-secondaire figcaption { font-style: italic; }
+/* Pas de font-style: italic ici : la police (IBM Plex Sans) n'a pas de
+   variante italique déclarée, le navigateur retombe alors sur une police de
+   secours — visuellement incohérent avec le reste du site. La discrétion
+   vient donc de la taille et de l'opacité, pas d'un changement de police. */
+.capture-secondaire figcaption { font-size: 13.5px; opacity: 0.75; }
 
 .ecran {
   display: block;
