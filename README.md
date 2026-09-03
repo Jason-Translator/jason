@@ -1,6 +1,6 @@
 # Jason
 
-[Téléchargements](https://github.com/Jason-Translator/jason/releases)
+[English](README.en.md) · [Téléchargements](https://github.com/Jason-Translator/jason/releases)
 
 **Traduisez sans connexion Internet, sans que rien ne quitte votre ordinateur.**
 
