@@ -118,6 +118,27 @@ Le second existe parce que certains modèles publiés en amont sont
 défectueux ; Jason contourne les cas connus (`MODELES_DE_REMPLACEMENT` dans
 `core/packages.py`) et ce script en repère de nouveaux.
 
+## Dépendances
+
+| Bibliothèque / outil | Rôle | Licence |
+|---|---|---|
+| [Argos Translate](https://github.com/argosopentech/argos-translate) | moteur de traduction | MIT |
+| [CTranslate2](https://github.com/OpenNMT/CTranslate2) | inférence (utilisé par Argos Translate) | MIT |
+| [Stanza](https://github.com/stanfordnlp/stanza) | découpage de phrases | Apache-2.0 |
+| [Lingua](https://github.com/pemistahl/lingua-rs) | reconnaissance de la langue | Apache-2.0 |
+| [SentencePiece](https://github.com/google/sentencepiece) | tokenisation (dépendance d'Argos Translate) | Apache-2.0 |
+| [Sacremoses](https://github.com/hplt-project/sacremoses) | dépendance d'Argos Translate | MIT |
+| [PyTorch](https://github.com/pytorch/pytorch) | calcul (utilisé par Stanza) | BSD-3-Clause |
+| [PySide6 (Qt for Python)](https://www.qt.io/qt-for-python) | interface graphique | LGPL-3.0 |
+| [Python](https://www.python.org/) | langage | PSF License |
+| [Hatchling](https://github.com/pypa/hatch) | build backend | MIT |
+| [PyInstaller](https://github.com/pyinstaller/pyinstaller) | empaquetage en exécutable | GPLv2+ (avec exception pour l'exécutable produit) |
+| [AppImageKit](https://github.com/AppImage/AppImageKit) | empaquetage Linux (AppImage) | MIT |
+| [Inno Setup](https://jrsoftware.org/isinfo.php) | empaquetage Windows (installateur) | Licence Inno Setup (gratuite, non-OSI) |
+
+PySide6/Qt est distribué en liaison dynamique : Jason lui-même reste sous
+licence MIT, seule cette dépendance reste sous LGPL-3.0.
+
 ## Limites connues
 
 - La traduction passe toujours par l'anglais : espagnol → français est donc
@@ -127,6 +148,5 @@ défectueux ; Jason contourne les cas connus (`MODELES_DE_REMPLACEMENT` dans
 
 ## Droits
 
-© François Guerin. Tous droits réservés — le code est publié pour être lu et
-vérifié, pas (encore) réutilisé. Bibliothèques tierces sous leurs licences
-respectives.
+© François Guerin. Publié sous licence [MIT](LICENSE). Bibliothèques
+tierces sous leurs licences respectives (voir Dépendances ci-dessus).

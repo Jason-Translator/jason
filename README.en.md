@@ -2,6 +2,9 @@
 
 [Français](README.md) · [Downloads](https://github.com/Jason-Translator/jason/releases)
 
+*Only the French [README.md](README.md) is authoritative; this is a
+convenience translation and may lag behind it.*
+
 **Translate offline, with nothing ever leaving your computer.**
 
 Jason translates entirely locally: no account, no ads, no server. A single
@@ -120,6 +123,27 @@ return gibberish. Jason works around known cases
 (`MODELES_DE_REMPLACEMENT` in `core/packages.py`); this script finds new
 ones after installing languages.
 
+## Dependencies
+
+| Library / tool | Role | License |
+|---|---|---|
+| [Argos Translate](https://github.com/argosopentech/argos-translate) | translation engine | MIT |
+| [CTranslate2](https://github.com/OpenNMT/CTranslate2) | inference (used by Argos Translate) | MIT |
+| [Stanza](https://github.com/stanfordnlp/stanza) | sentence segmentation | Apache-2.0 |
+| [Lingua](https://github.com/pemistahl/lingua-rs) | language detection | Apache-2.0 |
+| [SentencePiece](https://github.com/google/sentencepiece) | tokenization (Argos Translate dependency) | Apache-2.0 |
+| [Sacremoses](https://github.com/hplt-project/sacremoses) | Argos Translate dependency | MIT |
+| [PyTorch](https://github.com/pytorch/pytorch) | computation (used by Stanza) | BSD-3-Clause |
+| [PySide6 (Qt for Python)](https://www.qt.io/qt-for-python) | graphical interface | LGPL-3.0 |
+| [Python](https://www.python.org/) | language | PSF License |
+| [Hatchling](https://github.com/pypa/hatch) | build backend | MIT |
+| [PyInstaller](https://github.com/pyinstaller/pyinstaller) | packaging into an executable | GPLv2+ (with an exception for the produced executable) |
+| [AppImageKit](https://github.com/AppImage/AppImageKit) | Linux packaging (AppImage) | MIT |
+| [Inno Setup](https://jrsoftware.org/isinfo.php) | Windows packaging (installer) | Inno Setup License (free, non-OSI) |
+
+PySide6/Qt is distributed dynamically linked: Jason itself stays under the
+MIT license, only this dependency remains under LGPL-3.0.
+
 ## Known limitations
 
 - Translation always goes through English: Spanish → French is therefore
@@ -129,7 +153,5 @@ ones after installing languages.
 
 ## Rights
 
-© François Guerin. All rights reserved — the absence of a license file is
-a choice, not an oversight: the code is published to be read and
-verified, not (yet) reused. Third-party libraries remain under their
-respective licenses.
+© François Guerin. Released under the [MIT license](LICENSE). Third-party
+libraries remain under their respective licenses (see Dependencies above).
