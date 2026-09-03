@@ -12,7 +12,10 @@
 <meta property="og:type" content="website">
 
 <link rel="icon" href="images/jason.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
+<!-- Le ?v= force les navigateurs/CDN à recharger le fichier après un
+     changement : sans ça, style.css reste en cache et les correctifs
+     n'apparaissent pas. À incrémenter à chaque modification de ce fichier. -->
+<link rel="stylesheet" href="style.css?v=2">
 
 <!-- Applique le thème enregistré avant le premier rendu : sans ça, la page
      s'afficherait une fraction de seconde dans le mauvais thème. -->
